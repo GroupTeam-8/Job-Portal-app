@@ -51,11 +51,11 @@ const AboutPage = () => {
                                 <li><a href="/about-page">About</a></li>
                                 <li className="has-children">
                                     {user?.userType !== 'user' && (
-                                        <a href="/Post-Job">Post job</a>
+                                        <a href={user?.userType == "manager"? "/Post-Job": "/about-page"}>Post job</a>
                                     )}
                                 </li>
                                 {user?.userType !== 'user' && (
-                                    <Link to="/list-job">
+                                    <Link to={user?.userType == "manager"? "/list-job": "/about-page"}>
                                         <span>AI Filtering</span>
                                     </Link>
                                 )}
@@ -65,20 +65,22 @@ const AboutPage = () => {
 
                         <div className="right-cta-menu text-right d-flex align-items-center col-6">
                             <div className="ml-auto">
-                                {user?.userType !== 'user' && (
+                                {user !== null ? (
                                     <Link
-                                        to="/Post-Job"
-                                        className="btn btn-outline-white border-width-2 d-none d-lg-inline-block"
-                                    >
-                                        <span className="mr-2 icon-add">Post a Job</span>
-                                    </Link>
-                                )}
-                                <Link
                                     to="/Job-Board"
                                     className="btn btn-primary border-width-2 d-none d-lg-inline-block"
                                 >
                                     <span className="mr-2 icon-lock_outline">Logout</span>
-                                </Link>
+                                    </Link>
+                                ) : (
+                                    <Link
+                                    to="/login-1"
+                                    className="btn btn-primary border-width-2 d-none d-lg-inline-block"
+                                >
+                                    <span className="mr-2 icon-lock_outline">Login</span>
+                                    </Link>
+                                )}
+                                
                             </div>
                             <a
                                 href="#"

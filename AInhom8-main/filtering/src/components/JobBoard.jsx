@@ -115,13 +115,13 @@ const JobBoard = () => {
                         <nav className="mx-auto site-navigation">
                             <ul className="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
                                 <li><a href="/" className="nav-link active">Home</a></li>
-                                <li><a href="about.html">About</a></li>
+                                <li><a href="/about-page">About</a></li>
                                 <li className="has-children">
                                     <a href="/login-1">Post Job</a>
                                 </li>
 
                                 <li><a href="/login-1">AI Filtering</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="/contact-us">Contact</a></li>
                                 {/*<li className="d-lg-none"><a href="post-job.html"><span className="mr-2">+</span> Post a*/}
                                 {/*    Job</a></li>*/}
                                 {/*<li className="d-lg-none"><a href="login.html">Log In</a></li>*/}

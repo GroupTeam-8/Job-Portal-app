@@ -18,6 +18,7 @@ import Footer from "../Footer";
 // import '@react-pdf-viewer/core/lib/styles/index.css';
 import axios from "axios";
 import EvaluationResultsModal from './EvaluationResultsModal'; // Thay đổi đường dẫn đúng với cấu trúc dự án của bạn
+import Chatbox from "../applicant/ChatBox";
 
 const JobList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // Quản lý trạng thái modal
@@ -458,7 +459,7 @@ console.log(evaluationResults)
                 </div>
             </section>
             <Footer />
-
+            <Chatbox/>
 
         </div>
     );

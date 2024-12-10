@@ -4,6 +4,7 @@ import Helmet from "react-helmet";  // Nhập file CSS chính
 import '../../styles/animate.min.css'
 import '../../styles/custom-bs.css'
 import '../../styles/jquery.fancybox.min.css'
+import {Link} from "react-router-dom";
 import '../../styles/bootstrap-select.min.css'
 import '../../styles/owl.carousel.min.css'
 import 'icomoon/style.css';
@@ -104,17 +105,23 @@ const PostJob = () => {
                         <div className="site-logo col-6"><a href="/">JobBoard</a></div>
                         <nav className="mx-auto site-navigation">
                             <ul className="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-                                <li><a href="/" className="nav-link active">Home</a></li>
+                                <ul className="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+                                <li><a href="/Job-BoardMain" className="nav-link active">Home</a></li>
                                 <li><a href="/about-page">About</a></li>
                                 <li className="has-children">
-                                    <a href="/job-listings" className="active">Job Listings</a>
-                                    <ul className="dropdown">
-                                        <li><a href="/job-single">Job Single</a></li>
-                                        <li><a href="/post-job" className="active">Post a Job</a></li>
-                                    </ul>
+                                    <a href="/Post-Job">Post job</a>
+
                                 </li>
-                                <li><a href="/blog">Blog</a></li>
+
+
+                                <Link style={{color:'rgba(255, 255, 255, 0.5)'}} to="/list-job">
+                                    <span >AI Filtering</span>
+                                </Link>
                                 <li><a href="/contact-us">Contact</a></li>
+                                {/*<li className="d-lg-none"><a href="post-job.html"><span className="mr-2">+</span> Post a*/}
+                                {/*    Job</a></li>*/}
+                                {/*<li className="d-lg-none"><a href="login.html">Log In</a></li>*/}
+                            </ul>
                             </ul>
                         </nav>
                         <div className="right-cta-menu text-right d-flex aligin-items-center col-6">
