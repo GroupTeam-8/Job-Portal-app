@@ -13,6 +13,7 @@ import jobLogo from '../images/job_logo_1.jpg';
 import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 import 'bootstrap-select/dist/js/bootstrap-select.min.js';
 import axios from 'axios';  // Import axios để gửi yêu cầu HTTP
+import Chatbox from "./applicant/ChatBox";
 const AboutPage = () => {
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
@@ -46,7 +47,7 @@ const AboutPage = () => {
 
                         <nav className="mx-auto site-navigation">
                             <ul className="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-                                <li><a href="/Job-BoardMain" className="nav-link active">Home</a></li>
+                                <li><a href={user?.userType == 'user' ? '/ApplicantHome' : '/Job-BoardMain'} className="nav-link active">Home</a></li>
                                 <li><a href="/about-page">About</a></li>
                                 <li className="has-children">
                                     {user?.userType !== 'user' && (
@@ -152,6 +153,7 @@ const AboutPage = () => {
             </section>
 
             {/* Footer */}
+            <Chatbox/>
             <Footer/>
         </div>
     );
@@ -187,8 +189,8 @@ const TeamMember = ({name, role, image, description}) => (
         <div className="social mt-4">
             <a href="#"><span className="icon-facebook"></span></a>
             <a href="#"><span className="icon-twitter"></span></a>
-            <a href="#"><span className="icon-instagram"></span></a>
-            <a href="#"><span className="icon-linkedin"></span></a>
+            <a href="#"><span className="fa-brands fa-instagram"></span></a>
+            <a href="#"><span className="fa-brands fa-linkedin"></span></a>
         </div>
 
     </div>

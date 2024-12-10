@@ -14,6 +14,7 @@ const SignUpLogin = () => {
     const [rePassword, setRePassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();  // Khởi tạo useNavigate
+
     const handleSignUpSubmit = async (e) => {
         e.preventDefault();
 
@@ -52,6 +53,7 @@ const SignUpLogin = () => {
             localStorage.setItem('token', response.data.accesstoken);
             localStorage.setItem('userId', response.data.id);
             console.log('Đăng nhập thành công:', response.data);
+            
             if(response.data.userType == "user"){
                 navigate('/ApplicantHome'); // Điều hướng đến trang Job-Board
             } else if(response.data.userType == "manager"){

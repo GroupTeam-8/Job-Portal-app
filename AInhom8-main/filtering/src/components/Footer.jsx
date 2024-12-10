@@ -43,8 +43,8 @@ const Footer = () => {
                         <div className="footer-social">
                             <a href="https://www.facebook.com/profile.php?id=61570183013854"><span className="icon-facebook"></span></a>
                             <a href="#"><span className="icon-twitter"></span></a>
-                            <a href="#"><span className="icon-instagram"></span></a>
-                            <a href="#"><span className="icon-linkedin"></span></a>
+                            <a href="#"><span className="fa-brands fa-instagram"></span></a>
+                            <a href="#"><span className="fa-brands fa-linkedin"></span></a>
                         </div>
                     </div>
                 </div>

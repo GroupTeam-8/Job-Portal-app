@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import jobList from "./JobList";
 import {count} from "ckeditor5";
 import Footer from '../Footer'; // Import the Footer component
+import Chatbox from "../applicant/ChatBox";
 const JobBoardMain = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -68,7 +69,22 @@ const JobBoardMain = () => {
 
         fetchJobPostings();
     }, []); // Empty dependency array to run once on mount
+    useEffect(() => {
+        const token = localStorage.getItem('token'); // Lấy token từ localStorage
+        if (!token) {
+            // Nếu không có token, điều hướng về trang đăng nhập
+            navigate('/login-1', { replace: true });
+        }
+    }, [navigate]); // Dependency array để đảm bảo navigate hoạt động chính xác
 
+    const handleLogout = () => {
+        // Xóa dữ liệu trong localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+
+        // Điều hướng về trang đăng nhập, thay thế lịch sử
+        navigate('/login-1', { replace: true });
+    };
     const handleJobClick = (jobId) => {
         navigate(`/job-single/${jobId}`);
     };
@@ -469,7 +485,7 @@ const JobBoardMain = () => {
                 </div>
 
             </section>
-
+            <Chatbox/>
             <Footer />
         </div>
 

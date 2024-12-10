@@ -51,7 +51,7 @@ const ApplicantHome = () => {
                 if (!response.ok) {
                     throw new Error('Lỗi khi lấy dữ liệu');
                 }
-
+                
                 const data = await response.json();
 
                 console.log(data)
@@ -71,25 +71,42 @@ const ApplicantHome = () => {
         fetchJobPostings();
     }, []); // Empty dependency array to run once on mount
     //cập nhật thêm
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                // Lấy token từ localStorage hoặc context (nếu có)
-                const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:3001/current', {
-                    headers: {
-                        Authorization: token // Đính kèm token vào header
-                    }
-                });
+    // useEffect(() => {
+    //     const fetchUserData = async () => {
+    //         try {
+    //             // Lấy token từ localStorage hoặc context (nếu có)
+    //             const token = localStorage.getItem('token');
 
-                setUser(response.data); // Lưu thông tin người dùng vào state
-                console.log(response.data);
-            } catch (err) {
-                setError(err.response ? err.response.data.message : 'Lỗi kết nối');
-            }
-        };
-        fetchUserData();
-    }, []); //
+    //             const response = await axios.get('http://localhost:3001/current', {
+    //                 headers: {
+    //                     Authorization: token // Đính kèm token vào header
+    //                 }
+    //             });
+    //             setUser(response.data); // Lưu thông tin người dùng vào state
+    //             console.log(response.data);
+                
+    //         } catch (err) {
+    //             setError(err.response ? err.response.data.message : 'Lỗi kết nối');
+    //         }
+    //     };
+    //     fetchUserData();
+    // }, []); //
+    useEffect(() => {
+        const token = localStorage.getItem('token'); // Lấy token từ localStorage
+        if (!token) {
+            // Nếu không có token, điều hướng về trang đăng nhập
+            navigate('/login-1', { replace: true });
+        }
+    }, [navigate]); // Dependency array để đảm bảo navigate hoạt động chính xác
+
+    const handleLogout = () => {
+        // Xóa dữ liệu trong localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+
+        // Điều hướng về trang đăng nhập, thay thế lịch sử
+        navigate('/login-1', { replace: true });
+    };
     console.log(user)
     const handleJobClick = (jobId) => {
         navigate(`/job-single/${jobId}`);

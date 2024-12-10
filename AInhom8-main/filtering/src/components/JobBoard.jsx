@@ -14,6 +14,7 @@ import $ from 'jquery';
 import {Link, useNavigate} from "react-router-dom";
 import jobLogo from "../images/job_logo_1.jpg";
 import Footer from "./Footer";
+import Chatbox from "./applicant/ChatBox";
 
 const JobBoard = () => {
     $(document).ready(function() {
@@ -27,6 +28,7 @@ const JobBoard = () => {
         experience: ''
     });
     localStorage.removeItem('token');
+    
     const [filteredJobs, setFilteredJobs] = useState([]);
     useEffect(() => {
         const fetchJobPostings = async () => {
@@ -42,7 +44,10 @@ const JobBoard = () => {
                 console.error('Lỗi khi lấy job postings:', error);
             }
         };
-
+        const token = localStorage.getItem('token')
+        if(token === '') {
+            navigate('/login-1')
+        }
         fetchJobPostings();
     }, []); // Empty dependency array to run once on mount
     const handleJobClick = (jobId) => {
@@ -357,6 +362,7 @@ const JobBoard = () => {
 
                 </div>
             </section>
+            <Chatbox/>
             <Footer />
         </div>
     );

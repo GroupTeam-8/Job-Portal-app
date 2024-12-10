@@ -89,7 +89,7 @@ const ContactUs = () => {
 
                         <nav className="mx-auto site-navigation">
                             <ul className="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-                                <li><a href="/Job-BoardMain" className="nav-link active">Home</a></li>
+                                <li><a href={user?.userType == 'user' ? '/ApplicantHome' : '/Job-BoardMain'} className="nav-link active">Home</a></li>
                                 <li><a href="/about-page">About</a></li>
                                 <li className="has-children">
                                     {user?.userType !== 'user' && (

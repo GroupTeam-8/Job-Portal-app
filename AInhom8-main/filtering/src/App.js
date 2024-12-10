@@ -26,7 +26,14 @@ import JobList from "./components/recruiter/JobList";
 import ApplicationList from './components/recruiter/ApplicationList';
 import Signup1 from "./components/auth/signup1";
 import AboutPage from "./components/AboutPage";
+
+import Admin from "./components/admin/admin"
 import ContactUs from "./components/ContactUs";
+import User from "./components/admin/User";
+import Comment from "./components/admin/Comment";
+import Job from "./components/admin/Job";
+import Applications from "./components/admin/Applications";
+
 function App() {
     return (
         <Router>
@@ -66,6 +73,11 @@ function App() {
                     <Route path="/sign-up1" element={<Signup1 />} />
                     <Route path="/about-page" element={<AboutPage />} />
                     <Route path="/contact-us" element={<ContactUs />} />
+                    <Route path="/user" element={<User/>}/>
+                    <Route path="/comment" element={<Comment/>}/>
+                    <Route path="/job" element={<Job/>}/>
+                    <Route path="/applications" element={<Applications/>}/>
+                    <Route path="/admin" element={<Admin/>}/>
                 </Routes>
             </div>
         </Router>
