@@ -55,7 +55,7 @@ const FeedbackModal = ({ isOpen,onClose,applicantName,emailName,company,jobTitle
                     alert("Please provide interview time and location.");
                     return;
                 }
-                feedbackContent = `Congratulations! Your CV in ${jobTitle} has been shortlisted. Please attend the interview scheduled on ${interviewTime} at ${interviewLocation}.`;
+                feedbackContent = `Congratulations! Your CV in  has been shortlisted. Please attend the interview scheduled on ${interviewTime} at ${interviewLocation}.`;
             }
         }
 
