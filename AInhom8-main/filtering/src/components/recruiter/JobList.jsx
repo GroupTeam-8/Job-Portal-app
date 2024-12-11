@@ -336,7 +336,7 @@ console.log(evaluationResults)
                             {/* Dynamically display the number of job postings */}
                             <h2 className="section-title mb-2">{jobApplications.name} Job Listed</h2>
                             <button onClick={handleEvaluateAllClick} className="btn btn-primary">
-                                Đánh giá tất cả
+                               Evalute All
                             </button>
                             <EvaluationResultsModal
                                 EvaluationResults={evaluationResults}

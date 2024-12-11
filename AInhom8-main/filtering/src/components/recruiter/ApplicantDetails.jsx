@@ -291,7 +291,7 @@ const ApplicantDetails = () => {
 
                                                 <label htmlFor="job-description">Job Description</label>
                                                 {applicant?.required_skills ? (
-                                                    <div dangerouslySetInnerHTML={{__html: applicant.required_skills}}/>
+                                                    <div dangerouslySetInnerHTML={{__html: applicant.job_description}}/>
                                                 ) : (
                                                     <p>No job description provided.</p>
                                                 )}

@@ -91,7 +91,7 @@ const Comment = () => {
                 <div style={{justifyContent:"center",alignItems:"center",display:"flex"}} className="details">
                     <div className="recentOrders">
                         <div className="cardHeader">
-                            <h2>message</h2>
+                            <h2>Comment</h2>
 
                         </div>
                         <table>

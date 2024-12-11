@@ -44,6 +44,7 @@ const ApplicationForm = ({ isOpen, onClose }) => {
             });
 
             if (!response.ok) {
+                alert('Please fill all the field!')
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 

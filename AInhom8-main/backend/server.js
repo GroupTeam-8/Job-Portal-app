@@ -146,15 +146,15 @@ app.post('/update-application-status', (req, res) => {
     });
 });
 
-app.post("/send-email", async (req, res) => {
-    const { toEmail, applicantName, feedbackContent,company } = req.body;
+app.post("/send-email", async(req, res) => {
+    const { toEmail, applicantName, feedbackContent, company } = req.body;
 
     try {
         const transporter = nodemailer.createTransport({
             service: "gmail", // Thay đổi nếu bạn dùng dịch vụ SMTP khác
             auth: {
                 user: "quyetprime1234@gmail.com", // Email của bạn
-                pass: "nkjy qcgh wcjf vdlu",   // App Password nếu dùng Gmail
+                pass: "nkjy qcgh wcjf vdlu", // App Password nếu dùng Gmail
             },
         });
 
@@ -214,14 +214,13 @@ app.post('/login', (req, res) => {
             return;
         }
         if (result.length > 0) {
-            const accessToken = jwt.sign(
-                {userId: result[0].id},config.accessTokenSecret, {subject: 'accessApi',expiresIn: '1d'})
+            const accessToken = jwt.sign({ userId: result[0].id }, config.accessTokenSecret, { subject: 'accessApi', expiresIn: '1d' })
             res.status(200).json({
                 id: result[0].id,
                 name: result[0].fullname,
                 email: result[0].email,
                 accesstoken: accessToken,
-                userType:result[0].usertype
+                userType: result[0].usertype
             })
         } else {
             res.status(401).send('Thông tin đăng nhập không chính xác');
@@ -230,20 +229,21 @@ app.post('/login', (req, res) => {
     });
 });
 //cập nhật thêm
-app.get('/user', ensureAuthenticated,authorize(['admin','user']), (req,res) => {
+app.get('/user', ensureAuthenticated, authorize(['admin', 'user']), (req, res) => {
 
-    return res.status(200).json({message:"only admin and user can access this route"})
+    return res.status(200).json({ message: "only admin and user can access this route" })
 })
-app.get('/admin', ensureAuthenticated,authorize(['admin']), (req,res) => {
+app.get('/admin', ensureAuthenticated, authorize(['admin']), (req, res) => {
 
-    return res.status(200).json({message:"only admin can access this route"})
+    return res.status(200).json({ message: "only admin can access this route" })
 })
-app.get('/manager', ensureAuthenticated,authorize(['manager','admin']), (req,res) => {
+app.get('/manager', ensureAuthenticated, authorize(['manager', 'admin']), (req, res) => {
 
-    return res.status(200).json({message:"only manager and admin can access this route"})
+    return res.status(200).json({ message: "only manager and admin can access this route" })
 })
-function authorize(roles =[]){
-    return async function (req,res, next) {
+
+function authorize(roles = []) {
+    return async function(req, res, next) {
         const query = 'SELECT * FROM users WHERE id = ?';
         db.query(query, req.user.id, (err, result) => {
             const user = {
@@ -253,7 +253,7 @@ function authorize(roles =[]){
                 password: result[0].password,
                 userType: result[0].usertype
             }
-            if(!user || !roles.includes(user.userType)) {
+            if (!user || !roles.includes(user.userType)) {
                 return res.status(403).json({
                     message: 'Access denied'
                 })
@@ -265,25 +265,25 @@ function authorize(roles =[]){
 }
 
 
-app.get('/current',ensureAuthenticated, async(req,res) => {
+app.get('/current', ensureAuthenticated, async(req, res) => {
     const query = 'SELECT * FROM users WHERE id = ?';
     db.query(query, req.user.id, (err, result) => {
         try {
             const user = {
                 id: result[0].id,
                 fullname: result[0].fullName,
-                email:result[0].email,
+                email: result[0].email,
                 userType: result[0].usertype
             }
             return res.status(200).json({
-                id:user.id,
-                name:user.fullname,
-                email:user.email,
-                userType:user.userType
+                id: user.id,
+                name: user.fullname,
+                email: user.email,
+                userType: user.userType
             })
         } catch {
             return res.status(500).json({
-                message:err.message
+                message: err.message
             })
         }
     });
@@ -291,18 +291,18 @@ app.get('/current',ensureAuthenticated, async(req,res) => {
 async function ensureAuthenticated(req, res, next) {
     const accessToken = req.headers.authorization
 
-    if(!accessToken) {
+    if (!accessToken) {
         return res.status(401).json({
-            message:"Access Token not found"
+            message: "Access Token not found"
         })
     }
     try {
         const decodeAccessToken = jwt.verify(accessToken, config.accessTokenSecret)
-        req.user = {id: decodeAccessToken.userId}
+        req.user = { id: decodeAccessToken.userId }
         next()
     } catch (err) {
         return res.status(401).json({
-            message:"Access Token invald or expired"
+            message: "Access Token invald or expired"
         })
     }
 
@@ -354,7 +354,7 @@ app.put('/job_postings/:id', (req, res) => {
 
     const sql = 'UPDATE job_postings SET job_title = ?, job_description = ?, required_skills = ?, experience = ?, salary_range = ?, expiry_date = ?, job_type = ?, posted_date = ?, recruiter_id = ?, location = ?, company = ? WHERE id = ?';
 
-    db.query(sql, [job_title, job_description, required_skills, experience, salary_range, expiry_date, job_type, posted_date, recruiter_id, location,  company, id], (err, results) => {
+    db.query(sql, [job_title, job_description, required_skills, experience, salary_range, expiry_date, job_type, posted_date, recruiter_id, location, company, id], (err, results) => {
         if (err) {
             console.error('Lỗi khi cập nhật công việc:', err);
             return res.status(500).json({ message: 'Cập nhật công việc thất bại' });
@@ -403,7 +403,7 @@ const uploaddd = multer({ storage: storage }); // Chỉ nên định nghĩa mộ
 // API để thêm job posting
 // API để thêm job posting
 app.post('/job-postings', uploaddd.single('file'), (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1]; // Extract JWT from Authorization header
+    const token = req.headers.authorization ? .split(' ')[1]; // Extract JWT from Authorization header
     if (!token) {
         return res.status(401).json({ message: 'Authentication required' });
     }
@@ -543,7 +543,7 @@ app.get('/api/applications/:jobId', (req, res) => {
 //     });
 // });
 async function ensureAuthenticatedd(req, res, next) {
-    const token = req.headers.authorization?.split(' ')[1]; // Lấy token từ header
+    const token = req.headers.authorization ? .split(' ')[1]; // Lấy token từ header
     if (!token) {
         return res.status(401).json({ message: 'Access Token not found' });
     }
@@ -601,9 +601,9 @@ const fs = require('fs');
 
 async function repairAndParsePDF(buffer) {
     try {
-        const pdfDoc = await PDFDocument.load(buffer);  // Tải tệp PDF
-        const repairedBuffer = await pdfDoc.save();  // Tái lưu tệp để sửa lỗi cấu trúc
-        const data = await pdfParse(repairedBuffer);  // Phân tích tệp PDF tái lưu
+        const pdfDoc = await PDFDocument.load(buffer); // Tải tệp PDF
+        const repairedBuffer = await pdfDoc.save(); // Tái lưu tệp để sửa lỗi cấu trúc
+        const data = await pdfParse(repairedBuffer); // Phân tích tệp PDF tái lưu
         return data.text;
     } catch (error) {
         console.error("Error repairing or parsing PDF:", error.message);
@@ -616,7 +616,7 @@ async function repairAndParsePDF(buffer) {
 app.use(express.json());
 const gemiAI = new GoogleGenerativeAI("AIzaSyDujl7jCTfhCT1Apwb9UJdIR8uSdyGCRQw");
 
-app.post('/api/evaluate_cv', uploadd.single('cv_file'), async (req, res) => {
+app.post('/api/evaluate_cv', uploadd.single('cv_file'), async(req, res) => {
     console.log('Dữ liệu nhận được:', req.body); // Log dữ liệu từ frontend
     console.log('File tải lên:', req.file); // Log file được tải lên
 
@@ -665,9 +665,10 @@ app.post('/api/evaluate_cv', uploadd.single('cv_file'), async (req, res) => {
             console.log("Phản hồi từ AI:", JSON.stringify(response, null, 2)); // Log phản hồi chi tiết
 
             // Trích xuất kết quả từ phản hồi
-            const evaluationResult = response && response.response && response.response.candidates && response.response.candidates.length > 0
-                ? response.response.candidates[0].content.parts[0].text // Lấy nội dung đánh giá
-                : "Không tìm thấy kết quả đánh giá.";
+            const evaluationResult = response && response.response && response.response.candidates && response.response.candidates.length > 0 ?
+                response.response.candidates[0].content.parts[0].text // Lấy nội dung đánh giá
+                :
+                "Không tìm thấy kết quả đánh giá.";
 
             return res.json({ evaluation_result: evaluationResult });
         } catch (error) {
@@ -753,7 +754,7 @@ app.post('/api/applicants/:id/accept', (req, res) => {
 });
 
 
-app.post('/api/evaluate_all_cvs', async (req, res) => {
+app.post('/api/evaluate_all_cvs', async(req, res) => {
     console.log("API evaluate_all_cvs được gọi");
 
     // Log thông tin nhận được từ body (data gửi từ frontend)
@@ -820,7 +821,7 @@ app.post('/api/evaluate_all_cvs', async (req, res) => {
             try {
                 const model = gemiAI.getGenerativeModel({ model: "gemini-1.5-flash" });
                 const response = await model.generateContent([prompt]);
-                const evaluationResult = response?.response?.candidates?.[0]?.content?.parts?.[0]?.text || "Không tìm thấy kết quả đánh giá.";
+                const evaluationResult = response ? .response ? .candidates ? .[0] ? .content ? .parts ? .[0] ? .text || "Không tìm thấy kết quả đánh giá.";
 
                 // Thêm kết quả đánh giá vào danh sách kết quả
                 results.push({
@@ -874,7 +875,7 @@ app.get('/messages', (req, res) => {
     });
 });
 
-app.post('/api/job_market_questions', async (req, res) => {
+app.post('/api/job_market_questions', async(req, res) => {
     const { chatHistory } = req.body;
 
     if (!chatHistory || !Array.isArray(chatHistory)) {
@@ -897,7 +898,7 @@ app.post('/api/job_market_questions', async (req, res) => {
     try {
         const response = await gemiAI.getGenerativeModel({ model: "gemini-1.5-flash" }).generateContent([prompt]);
 
-        const answer = response.response?.candidates?.[0]?.content?.parts?.[0]?.text || "Tôi không chắc chắn.";
+        const answer = response.response ? .candidates ? .[0] ? .content ? .parts ? .[0] ? .text || "Tôi không chắc chắn.";
         return res.json({ answer });
     } catch (error) {
         console.error("Lỗi từ mô hình AI:", error);
@@ -905,7 +906,7 @@ app.post('/api/job_market_questions', async (req, res) => {
     }
 });
 
-app.post('/api/evaluate_cv1', uploadd.single('cv_file'), async (req, res) => {
+app.post('/api/evaluate_cv1', uploadd.single('cv_file'), async(req, res) => {
     console.log('Dữ liệu nhận được:', req.body); // Log dữ liệu từ frontend
     console.log('File tải lên:', req.file); // Log file được tải lên
 
@@ -952,9 +953,10 @@ app.post('/api/evaluate_cv1', uploadd.single('cv_file'), async (req, res) => {
             console.log("Phản hồi từ AI:", JSON.stringify(response, null, 2)); // Log phản hồi chi tiết
 
             // Trích xuất kết quả từ phản hồi
-            const evaluationResult = response && response.response && response.response.candidates && response.response.candidates.length > 0
-                ? response.response.candidates[0].content.parts[0].text // Lấy nội dung đánh giá
-                : "Không tìm thấy kết quả đánh giá.";
+            const evaluationResult = response && response.response && response.response.candidates && response.response.candidates.length > 0 ?
+                response.response.candidates[0].content.parts[0].text // Lấy nội dung đánh giá
+                :
+                "Không tìm thấy kết quả đánh giá.";
 
             return res.json({ evaluation_result: evaluationResult });
         } catch (error) {
@@ -1055,7 +1057,7 @@ app.get('/api/job_postings/count', (req, res) => {
         res.json({ count: results.length }); // Đếm số dòng trong kết quả
     });
 });
-app.post('/api/evaluate_cv_all', uploadd.array('cv_files', 10), async (req, res) => {
+app.post('/api/evaluate_cv_all', uploadd.array('cv_files', 10), async(req, res) => {
     console.log('Dữ liệu nhận được:', req.body); // Log dữ liệu từ frontend
     console.log('Files tải lên:', req.files); // Log các file được tải lên
 
@@ -1106,11 +1108,12 @@ app.post('/api/evaluate_cv_all', uploadd.array('cv_files', 10), async (req, res)
                 const response = await model.generateContent([prompt]);
 
                 const evaluationResult = response &&
-                response.response &&
-                response.response.candidates &&
-                response.response.candidates.length > 0
-                    ? response.response.candidates[0].content.parts[0].text // Lấy nội dung đánh giá
-                    : "Không tìm thấy kết quả đánh giá.";
+                    response.response &&
+                    response.response.candidates &&
+                    response.response.candidates.length > 0 ?
+                    response.response.candidates[0].content.parts[0].text // Lấy nội dung đánh giá
+                    :
+                    "Không tìm thấy kết quả đánh giá.";
 
                 // Lọc tỷ lệ phần trăm phù hợp
                 const matchPercentage = evaluationResult.match(/(\d+)%/); // Tìm tỷ lệ phần trăm
